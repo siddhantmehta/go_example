@@ -19,7 +19,7 @@ func (c *Capper) Write(p []byte) (n int, err error) {
 		}
 		out[i] = c
 	}
-	return c.wtr.Write(out)
+	return c.wtr.Write(out) // here we are calling Write function of io.writer
 }
 func main() {
 	c := &Capper{os.Stdout}
