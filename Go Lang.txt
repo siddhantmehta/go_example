@@ -1,0 +1,255 @@
+Go Lang
+To give comment
+// -Single line command
+/* 
+
+*/ - Multiline comment
+package main is necessary in go lang for program to run
+fmt package contains formatted print options
+to define a function we hv to use 'func' keyword
+func main(){ -> body starts
+	
+} -> body ends
+here to call any builtin function we have to use package name
+fmt.Println -> print in new line
+To run go program
+go run <program.go>
+Now we need to create an executable file which we can distribute
+go build <program.go>
+
+to see help and other options for go tool
+go help
+
+to declare variable
+var x int
+by default 0 will be assigned to x. By default int size will be taken based on system. we can also use int8, int16, int32, int64 and unsigned versions of all of them based on need
+
+fmt.Printf("x=%v, type of %T\n",x,x) -> %v will print value and %T is for data type of variable
+
+Go's type system is very strict, it wont allow us to add float and integer 
+Another way to declare variable and assign value in one line
+x := 1.0
+x,y := 1.0,2.0
+
+If we declare a variabe and don't use it then go will throw an error
+
+Conditional statement
+The opening curly braces should come after the condition of if and else shud come after the closing curly braces of if
+if x < 5 { // this has to come here only
+	
+} else { // this opening curly braces can come in next line
+	
+}
+
+logical AND - &&
+logical OR - || 
+
+if can have computational statement as well
+a,b := 1.0,2.0
+if frac := a/b; frac> 0.5{
+	
+}
+
+switch-case - we need not have to give break in case statement
+1. switch x {
+	case 1 :
+	default:
+}
+2. switch{
+	case x > 100:
+	default : 
+}
+
+Loop - only loop available is for
+1. for i:=0;i<3:i++{
+	
+}
+2. a:=0
+for a<3{          //while loop alternative
+	a++
+}
+3. b:= 0
+for {                   //infinte loop
+	if b > 2{          // breaking condition
+		break
+	}
+	b++
+}
+break and continue keyword are same as other language
+
+String 
+len("hello") -> will give lenght of the string
+a := "hello"
+a[0] -> it will give the ascii code of first letter of string and its type will be uint8, uint8 is a byte
+strings are immutable
+string slicing 
+string[start:end] -> start will be covered but end will not be covered
+string concatenation '+'
+strings are unicode so we can add any character in it
+to create multi line string using back quote(`)
+`Hello
+god is greate
+`
+to convert number to string - Sprintf, Sprintln
+fmt.Printf("s = %s",s) -> %s will print without double quotes
+fmt.Printf("s = %q",s) -> %q will print the value of s in double quotes
+
+Slices
+a := []string{"one","two"}
+
+[] -> data type
+string -> type of value to be stored
+{} -> it will contain the elements
+"one" -> data
+
+range keyword
+for i:=range a{     //i will have index of each element of array
+	
+}
+
+for i,name:=range a{     //i will have index of each element of array and name will have the value at each index
+	
+}
+
+for _,name:=range a{     // _ will ignore the index and name will have value at each index 
+	
+}
+To extend slice we can use append function
+b := append(a,"four")
+
+Slices is build on top of array
+
+Maps -> its a key value pair data structure, all key should be of same type and all value shud of same type
+         key_type  data_type
+a := map[string]float64{
+	"one" : 1.0,
+	"two" : 2.0, //must have trailing comma in multi line
+}
+if we try to access not existing key in map, go will give 0 if its not found
+//Double value 
+value , ok = a["three"]
+
+value -> it will get value corresponding to key "three" if it exists otherwise it will get 0
+ok -> it will have true or false based on whether key is present in maps or not
+built in delete function is used to delete  a data
+//single value for
+for key := range a{
+	
+}
+//double value for
+for key, value := range a{
+	
+}
+
+Split text to word using Fields functions
+words = strings.Fields(text)
+
+Functions
+func <func_name>(<variable_name> <variable_type>,<variable_name> <variable_type>) (return_type1, return_type2){
+	
+}
+Go passes a argument as Pass by Value to parameter however it passes slice or map then it will be Pass by Reference.
+Here we can pass pointer to object but we cant perform pointer arithmetic hence its safer
+
+Its a standard in go that error will be returned as last parameter
+alternative to None or NULL is nil in go
+Go has garbage collector of its own, Also if we want to close a file, release some socket etc then we can use defer keyword. To make sure that resource it closed we use defer
+defer will run even in case of error or panic(exception) making sure the resources will be released. If multiple defers are called then they will be executed in reverse order
+defer cleanup("A") // second this will be cleaned
+defer cleanup("B") // first this will be cleaned
+
+struct data type -> similar to C's structure where we can have multiple data types inside it
+type <struct_name> struct{
+	name string
+	age int
+}
+t1 := <struct_name>{<field1>,field2} // struct object created, here we hv to pass values in order in which these elements are declared in struct
+or 
+t1 := <strunct_name>{        //here order is not mandatory
+	name : "Ram",
+	age : 50,
+}
+or
+t1 := <struct_name>{}   //Go will assign 0 value for int field, empty string for string field and false for bool field
+
+To access individual field <struct_name>.<field_name>
+%+v in Printf is used to show output in more detailed form
+
+Like we have public and private in C++ or Jave, here to achieve that we have to maintain the case in which we are declaring variable, If it is starting is upper case letter than it is accessible by other package otherwise it is only accessible within the package
+
+Methods on struct type - these methods definition contains receiver type so that we can directly use that receiver type pointer to access its member
+func (t *Trade) Value() float64{         //receiver Type of *Trade, we can directly access the fields of the object for which the method is called using receiver types. 
+	fmt.Println(t.name)
+}
+t1.Value() //t1's address will be caught in t 
+Also go does dynamic type conversion 
+
+func (t Trade) Value() float64{    //receiver type is of type Trade instead of pointer 
+	fmt.Println(t.name)
+}
+t1.Value()   // here we are aclling Value with t1
+From above 2 examples it can be seen that Value method is called with same t1 object, but receiver type is different and still we are able to access struct's property, in one case it is catching the address and in another it is creating copy of same object and that object has only local existence.
+
+We generally put pointer as receiver Types otherwise we wont be able to change any element of it.
+
+Pointer in go
+t1 := Trade{}  // t1 is the reference of Trade object
+t1 := &Trade{} //t1 is pointing to Trade object
+
+
+Constructor are used to initialize properties of a class in C++ or Java, similarly
+To initialize the properties of a struct in go we write a function whose name starts with New, and it will create a object of that struct and return the pointer to created object and an error value
+
+log.Fatalf -> it is similar to fmt.Printf followed by a call to os.Exit(1)
+
+Interfaces
+It is a category which contains general methods applicable to all the products under that category. It is a collection of methods and each product should implement all the methods of interface in name, signature and return value
+
+Package Errors 
+In order to get the proper exceptions we need to used error package, its not present in default package of go so we hv to install it from github
+go get github.com/pkg/errors
+
+Sometimes we can't handle errors and we hv to show them so we use panic. its similar to exception
+Panic is a built-in function that stops the ordinary flow of control and begins panicking. When the function F calls panic, execution of F stops, any deferred functions in F are executed normally, and then F returns to its caller. To the caller, F then behaves like a call to panic. The process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes. Panics can be initiated by invoking panic directly. They can also be caused by runtime errors, such as out-of-bounds array accesses.
+
+Recover is a built-in function that regains control of a panicking goroutine. Recover is only useful inside deferred functions. During normal execution, a call to recover will return nil and have no other effect. If the current goroutine is panicking, a call to recover will capture the value given to panic and resume normal execution.
+
+Goroutines - one of the use of go routines is to provide concurrency with multiple paraller requests. it finishes execution so fast that it wont wait for request to get response. 
+In place we can use wait calls so that go routines can wait until all are finished
+
+the prefered way to communicate between go routines is by channels, channels are typed 1 directional pipes. we send values from one side and receive at another side. if we try to receive and there is nothing in channel then in that case channel will be blocked completely. Channels are of 2 types
+1. buffered -> They have capacity to hold value, it will keep accumulating until it is filled and once its filled it will be blocked
+2. unbuffered -> if we push value into this channel then it will be blocked until someone receives it on the other side
+If we dnn know how many items are there in channel then sender can signal it by closing the channel once done and receiver can use range keyword to iterate over the channel
+Built in select function help us to work with multiple channels together
+
+while importing we can give name to the imported file so that we can use that name later to access the package
+toml "github.com/pelletier/go-toml"
+
+go.mod - it is used to maintain dependencies and in that file we will mention waht are the packages we require and what version is needed
+go.sum - It contains the packages that you actually require
+
+Testing
+Test file in go has name suffixing <testcase_name>_test.go and test function name should start with Test<testcase_ name> 
+to run a test
+go test 
+or
+go test -v
+
+Benchmarking -> it is used for profiling, it sets a standard that in order to perform a particular operation for a particular number of times, it is taking a certain amount of time per opertaion. this value we can have it and later compare it with actual test results. A function name should start with Benchmark<benmark_name>, to run it
+go test -v -bench .
+here . is to run all benchmark functions
+if we want to run only benchmark function then
+go test -v -bench . -run TTT
+TTT testcase does not exists, its dummy
+To do profiling we can use benchmark, and we can see in which steps our program is taking more time
+go test -v -bench . -run TTT -cpuprofile=prof.out
+now profiling is done, to see it we can use pprof tool
+go tool pprof prof.out   // it will go into (prof) prompt, to see our funciton we type
+(prof) list Sqrt
+
+Json
+in order to use fields of struct in json we hv to add json tag for every field while declaring it
+type Temp struct{
+	One string `json:something`
+}
