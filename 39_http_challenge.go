@@ -21,6 +21,18 @@ func userInfo(login string) (*User, error) {
 	defer resp.Body.Close()
 	dec := json.NewDecoder(resp.Body)
 	usr := &User{}
+	/*
+		for multiple json objects in response
+		var usr User
+		users := make([]User,0)
+		for dec.More(){
+			if err := dec.Decode(&usr); err!=nil{
+				panic(err)
+			}
+			users = append(users,usr)
+		}
+
+	*/
 	if err := dec.Decode(usr); err != nil {
 		return nil, err
 	}

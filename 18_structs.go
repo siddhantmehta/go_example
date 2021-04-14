@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(t1)
 	fmt.Printf("%+v\n", t1)
 	fmt.Println(t1.Symbol)
-
+	//out of order assignment
 	t2 := Trade{
 		Symbol: "MSFT",
 		Buy:    true,
